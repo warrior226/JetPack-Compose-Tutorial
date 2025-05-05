@@ -6,9 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,74 +39,38 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetPackComposeTutorialTheme {
                 Surface (color=MaterialTheme.colorScheme.background) {
-                    Greeting()
+                    CustomText()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(
-            modifier =Modifier.background(MaterialTheme.colorScheme.primary)
-                .padding(16.dp)
-                .width(500.dp)
-            ,
-            text = stringResource(R.string.app_name),
-            color=Color.White,
-            fontSize =MaterialTheme.typography.headlineSmall.fontSize,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.End
-        )
-    }
-}
 
 //Composable to apply Style on each character
 @Composable
 fun CustomText() {
-    // Access colorScheme within the @Composable function's body
-    val primaryColor = MaterialTheme.colorScheme.primary
-
-    Text(
-        buildAnnotatedString {
-            withStyle(style = ParagraphStyle()) {
-                withStyle(
-                    style = SpanStyle(
-                        color = primaryColor, // Use the variable instead
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                ) {
-                    append("A")
-                }
-                append("B")
-                append("C")
-                append("D")
+    SelectionContainer {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Text("Hello World !!!");
+            Text("Hello World !!!");
+            DisableSelection {
+                Text("Hello World !!!");
             }
-        },
-        modifier = Modifier.width(200.dp)
-    )
+        }
+
+    }
 }
 
 
-@Composable
-fun CustomText3(){
-Text(text = "Hello World".repeat(100),maxLines = 2, overflow = TextOverflow.Visible)
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     JetPackComposeTutorialTheme {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()){
             CustomText()
-            //  Greeting()
-            CustomText3()
 
         }
-
     }
 }
