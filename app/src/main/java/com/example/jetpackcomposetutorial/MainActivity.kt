@@ -7,7 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -31,11 +34,10 @@ class MainActivity : ComponentActivity() {
             JetPackComposeTutorialTheme {
                 Scaffold(modifier = Modifier.fillMaxSize(), containerColor =Color.White) { innerPadding ->
 
-                    Column(
+                    Row(
                         modifier = Modifier.fillMaxSize()
                             .padding(innerPadding),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.Start,
 
                         ) {
                         CustomItem(weight = 3f, color = MaterialTheme.colorScheme.secondary)
@@ -64,9 +66,10 @@ fun CustomText(text:String){
 }
 
 @Composable
-fun ColumnScope.CustomItem(weight:Float,color:Color=MaterialTheme.colorScheme.primary){
+fun RowScope.CustomItem(weight:Float, color:Color=MaterialTheme.colorScheme.primary){
     Surface(modifier = Modifier
         .width(200.dp)
+        .height(50.dp)
         .weight(weight),
         color = color){
 
@@ -78,10 +81,9 @@ fun ColumnScope.CustomItem(weight:Float,color:Color=MaterialTheme.colorScheme.pr
 fun GreetingPreview() {
     JetPackComposeTutorialTheme {
 
-        Column(
+        Row(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.Start,
 
         ) {
             CustomItem(weight = 3f, color = MaterialTheme.colorScheme.secondary)
