@@ -1,14 +1,13 @@
 package com.example.jetpackcomposetutorial
 
-import android.icu.text.DisplayContext
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -30,15 +29,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JetPackComposeTutorialTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(), containerColor =MaterialTheme.colorScheme.primary) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize(), containerColor =Color.White) { innerPadding ->
 
-                    Column {
-                        Greeting(
-                            name = "Android",
-                            modifier = Modifier.padding(innerPadding)
-                        )
-                        CustomText(text = "I am learning JetPack Compose")
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(innerPadding),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly,
 
+                        ) {
+                        CustomItem(weight = 3f, color = MaterialTheme.colorScheme.secondary)
+                        CustomItem(weight = 1f)
                     }
                 }
             }
@@ -62,6 +63,16 @@ fun CustomText(text:String){
     )
 }
 
+@Composable
+fun ColumnScope.CustomItem(weight:Float,color:Color=MaterialTheme.colorScheme.primary){
+    Surface(modifier = Modifier
+        .width(200.dp)
+        .weight(weight),
+        color = color){
+
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -73,22 +84,8 @@ fun GreetingPreview() {
             verticalArrangement = Arrangement.SpaceEvenly,
 
         ) {
-            Surface(modifier = Modifier
-                .width(200.dp)
-                .weight(3f),
-                color = MaterialTheme.colorScheme.secondary) {
-                Column {
-
-                }
-            }
-            Surface(modifier = Modifier
-                .width(200.dp)
-                .weight(5f),
-                color = MaterialTheme.colorScheme.primary) {
-                Column {
-
-                }
-            }
+            CustomItem(weight = 3f, color = MaterialTheme.colorScheme.secondary)
+            CustomItem(weight = 1f)
         }
     }
 }
