@@ -24,6 +24,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
@@ -39,7 +40,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetPackComposeTutorialTheme {
                 Surface (color=MaterialTheme.colorScheme.background) {
-                    CustomText()
+                    Column(modifier = Modifier.fillMaxSize()){
+                    }
                 }
             }
         }
@@ -49,19 +51,34 @@ class MainActivity : ComponentActivity() {
 
 //Composable to apply Style on each character
 @Composable
-fun CustomText() {
-    SelectionContainer {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Text("Hello World !!!");
-            Text("Hello World !!!");
-            DisableSelection {
-                Text("Hello World !!!");
+fun SubscriptText(
+    normalText: String,
+    subscriptText: String,
+
+){
+    Text(
+        buildAnnotatedString {
+            withStyle(style = SpanStyle(
+                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                fontWeight = FontWeight.Normal
+            )
+            ){
+                append(normalText)
             }
+
+            withStyle(style = SpanStyle(
+                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                fontWeight = FontWeight.Normal,
+                baselineShift = BaselineShift.Superscript
+            )
+            )
+            {
+                append(subscriptText)
+            }
+
         }
-
-    }
+    )
 }
-
 
 
 @Preview(showBackground = true)
@@ -69,8 +86,7 @@ fun CustomText() {
 fun GreetingPreview() {
     JetPackComposeTutorialTheme {
         Column(modifier = Modifier.fillMaxSize()){
-            CustomText()
-
+            SubscriptText("Hello", "World")
         }
     }
 }
