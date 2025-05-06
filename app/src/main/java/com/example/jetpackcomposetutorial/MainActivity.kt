@@ -39,9 +39,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JetPackComposeTutorialTheme {
-                Surface (color=MaterialTheme.colorScheme.background) {
-                    Column(modifier = Modifier.fillMaxSize()){
-                    }
+                Column(modifier = Modifier.fillMaxSize().padding(30.dp).background(Color.White)) {
+                    ExpandableCard(title="My Title", description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+
                 }
             }
         }
@@ -50,43 +50,20 @@ class MainActivity : ComponentActivity() {
 
 
 //Composable to apply Style on each character
-@Composable
-fun SubscriptText(
-    normalText: String,
-    subscriptText: String,
-
-){
-    Text(
-        buildAnnotatedString {
-            withStyle(style = SpanStyle(
-                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-                fontWeight = FontWeight.Normal
-            )
-            ){
-                append(normalText)
-            }
-
-            withStyle(style = SpanStyle(
-                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-                fontWeight = FontWeight.Normal,
-                baselineShift = BaselineShift.Superscript
-            )
-            )
-            {
-                append(subscriptText)
-            }
-
-        }
-    )
-}
 
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     JetPackComposeTutorialTheme {
-        Column(modifier = Modifier.fillMaxSize()){
-            SubscriptText("Hello", "World")
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(24.dp)
+        ){
+            ExpandableCard(title="My Title", description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+
         }
     }
 }
