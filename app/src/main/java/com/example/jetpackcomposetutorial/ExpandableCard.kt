@@ -69,7 +69,7 @@ fun ExpandableCard(
                 .padding(padding)
         ) {
 
-            Row(verticalAlignment = Alignment.CenterVertically){
+            Row(verticalAlignment = Alignment.CenterVertically,){
                 Text(
                     title,
                     fontSize = titleFontSize,
