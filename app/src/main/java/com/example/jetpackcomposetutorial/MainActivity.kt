@@ -54,23 +54,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color =Color.White
                 ){
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-
-                    ){
-                        CoilImage()
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = {
-                                imageLoader.diskCache?.clear()
-                                imageLoader.memoryCache?.clear()
-                            }
-                        ) {
-                            Text("Clear Cache")
-                        }
-                    }
+                    PasswordTextField()
                 }
             }
         }
