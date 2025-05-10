@@ -2,17 +2,25 @@ package com.example.jetpackcomposetutorial
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +38,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import coil3.ImageLoader
+import coil3.compose.AsyncImage
+import coil3.compose.rememberAsyncImagePainter
+import coil3.imageLoader
 import com.example.jetpackcomposetutorial.ui.theme.JetPackComposeTutorialTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,14 +60,16 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
 
                     ){
-                        GoogleButton(
-                            "Inscrivez-vous",
-                            "Insciption en cours....",
-                            onClicked = {
-                                Log.d("TAG", "GoogleButtonPreview:Clicked")
+                        CoilImage()
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = {
+                                imageLoader.diskCache?.clear()
+                                imageLoader.memoryCache?.clear()
                             }
-                        )
-
+                        ) {
+                            Text("Clear Cache")
+                        }
                     }
                 }
             }
@@ -63,49 +78,21 @@ class MainActivity : ComponentActivity() {
 }
 
 
-//Composable to apply Style on each character
 @Composable
-fun Greeting(){
-    Column(
+fun CoilImage(){
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .height(150.dp)
+            .width(150.dp)
+            .clickable {
+                Log.d("TAG", "CoilImage: The image has been clicked")
+            },
+        contentAlignment = Alignment.Center
     ){
+        AsyncImage(
+            "https://avatars.githubusercontent.com/u/69650754?v=4",
+            "Golden State Warriors Image",
 
-        var text by remember {
-            mutableStateOf("Type here...")
-        }
-        TextField(value =text,onValueChange = {it->
-            text=it;
-            Log.d("TAG", "Greeting:The new text is $text ");
-        },
-            label={
-                Text("Title");
-            },
-           maxLines = 2,
-            leadingIcon = {
-                IconButton(
-                    onClick = {}
-                ) {
-                    Icon(imageVector = Icons.Filled.Email, contentDescription ="Email Icon", tint = Color.Cyan)
-
-                }
-            },
-            trailingIcon = {
-                IconButton(
-                    onClick = {
-
-                    }
-                ) {
-                    Icon(imageVector =Icons.Filled.Done, contentDescription = "Sent Icon",tint=Color.Cyan)
-                }
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Send
-            )
         )
     }
 }
@@ -117,10 +104,11 @@ fun GreetingPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Greeting()
-
+            CoilImage()
         }
     }
 }
