@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,6 +45,8 @@ import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import coil3.imageLoader
 import com.example.jetpackcomposetutorial.ui.theme.JetPackComposeTutorialTheme
+import com.example.jetpackcomposetutorial.ui.theme.color1
+import com.example.jetpackcomposetutorial.ui.theme.color2
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +55,25 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetPackComposeTutorialTheme {
                 Surface(
-                    color =Color.White
+                    color =Color.White,
                 ){
-                    PasswordTextField()
+                    GradientButton(
+                        text = "Button",
+                        textColor = Color.White,
+                        gradient = Brush.horizontalGradient(
+                            colors = listOf(
+                                color1,
+                                color2
+                            )
+                        ),
+                        onClick ={
+                            Log.d("TAG", "GradientButtonPreview:Button has been clicked ")
+                        }
+
+                    )
+
+                    Button(onClick = { /*TODO*/ }) { }
+
                 }
             }
         }
