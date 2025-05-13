@@ -2,51 +2,26 @@ package com.example.jetpackcomposetutorial
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.ImageLoader
-import coil3.compose.AsyncImage
-import coil3.compose.rememberAsyncImagePainter
-import coil3.imageLoader
+import androidx.wear.compose.material.Text
+import com.example.jetpackcomposetutorial.repository.PersonRepository
 import com.example.jetpackcomposetutorial.ui.theme.JetPackComposeTutorialTheme
-import com.example.jetpackcomposetutorial.ui.theme.color1
-import com.example.jetpackcomposetutorial.ui.theme.color2
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,26 +29,31 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JetPackComposeTutorialTheme {
-                Surface(
-                    color =Color.White,
-                ){
-                    GradientButton(
-                        text = "Button",
-                        textColor = Color.White,
-                        gradient = Brush.horizontalGradient(
-                            colors = listOf(
-                                color1,
-                                color2
+
+                val section= listOf("A","B","C","D","E","F","G","H","I","J","K","L","M")
+
+                LazyColumn(
+                    contentPadding = PaddingValues(all = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    section.forEach { section->
+                        stickyHeader {
+                            Text(
+                                modifier = Modifier.fillMaxWidth()
+                                    .background(Color.LightGray)
+                                    .padding(12.dp),
+                                text = "Section $section"
                             )
-                        ),
-                        onClick ={
-                            Log.d("TAG", "GradientButtonPreview:Button has been clicked ")
                         }
 
-                    )
-
-                    Button(onClick = { /*TODO*/ }) { }
-
+                        items(10){
+                            Text(
+                                modifier = Modifier.padding(12.dp),
+                                text = "Item $it from the section $section",
+                                color = Color.Black
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -81,37 +61,21 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun CoilImage(){
-    Box(
-        modifier = Modifier
-            .height(150.dp)
-            .width(150.dp)
-            .clickable {
-                Log.d("TAG", "CoilImage: The image has been clicked")
-            },
-        contentAlignment = Alignment.Center
-    ){
-        AsyncImage(
-            "https://avatars.githubusercontent.com/u/69650754?v=4",
-            "Golden State Warriors Image",
-
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     JetPackComposeTutorialTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            CoilImage()
+
+        val personRepository = PersonRepository()
+        val getAllData = personRepository.getAllPersons()
+
+        LazyColumn() {
+            items(items = getAllData){
+                    person ->
+                CustomItem(person =person)
+            }
         }
+
     }
 }
