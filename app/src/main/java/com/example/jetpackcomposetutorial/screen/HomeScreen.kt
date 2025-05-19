@@ -16,6 +16,8 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun HomeScreen(
+    nomString: String?,
+    prenomString:String?,
     navHostController: NavHostController
 ){
     Box(
@@ -26,7 +28,7 @@ fun HomeScreen(
             modifier = Modifier.clickable {
                 navHostController.navigate(Screen.Detail.route)
             },
-            text="First Screen",
+            text="Hey my name is $nomString $prenomString",
             color = MaterialTheme.colorScheme.primary,
             fontSize = MaterialTheme.typography.headlineSmall.fontSize,
             fontWeight = FontWeight.Bold
@@ -37,5 +39,5 @@ fun HomeScreen(
 @Composable
 @Preview(showBackground = true)
 fun HomeScreenPreview(){
-    HomeScreen(navHostController = rememberNavController())
+    HomeScreen("","",navHostController = rememberNavController())
 }

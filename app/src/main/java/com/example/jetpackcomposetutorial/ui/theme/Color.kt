@@ -12,3 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val color1=Color(0xFF642B73)
 val color2=Color(0xFFC6426E)
+val checkBoxColor=Color(0xFF063970)

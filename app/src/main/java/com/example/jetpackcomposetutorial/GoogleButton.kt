@@ -48,6 +48,7 @@ fun GoogleButton(
 ){
     var clicked by remember{ mutableStateOf(false) }
     Surface(
+
         onClick = {
             Log.d("TAG", "GoogleButton: The Google Button has been clicked ");
             clicked=!clicked;
@@ -56,6 +57,7 @@ fun GoogleButton(
         border = BorderStroke(1.dp, borderColor),
         color =backgroundColor
     ) {
+
         Row(
             modifier = Modifier
                 .padding(
