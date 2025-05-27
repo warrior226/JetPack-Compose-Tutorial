@@ -1,0 +1,3 @@
+Comparing dagger-hill , Koin and manuel Di
+
+A Di is just an instance of a class and consist of taking an instance of this class and passing it to another class(via constructor)

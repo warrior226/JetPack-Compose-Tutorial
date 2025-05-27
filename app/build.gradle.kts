@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.daggerHilt)
+    kotlin("kapt")
+
 }
 
 android {
@@ -55,6 +58,11 @@ dependencies {
     implementation(libs.androidx.coil.network.okhttp)
     implementation(libs.navigaton.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.hilt.android)
+    implementation(libs.androidx.koin.android.compose)
+    implementation(libs.androidx.koin.android.compose.navigation)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.androidx.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

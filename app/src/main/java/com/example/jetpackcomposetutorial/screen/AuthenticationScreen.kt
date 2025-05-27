@@ -85,7 +85,6 @@ fun AuthenticationScreen(navHostController: NavHostController){
             .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(48.dp))
         Text(
             text="Welcome",
             fontWeight = FontWeight.Bold,
