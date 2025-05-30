@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,6 +22,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,9 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetPackComposeTutorialTheme {
                 Scaffold(modifier = Modifier
-                    .background(Color.White)
                     .fillMaxSize()) { innerPadding ->
-
                     MyUI(modifier = Modifier.padding(innerPadding))
                 }
             }
@@ -66,36 +67,19 @@ fun MyUI(modifier: Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ){
-
-        //Used for StaggeredGrid (grille décallée)
-        LazyHorizontalStaggeredGrid(rows=StaggeredGridCells.Adaptive(200.dp)) {
-            items(50) {
-                Box(modifier = Modifier
-                    .padding(12.dp)
-                    .width(Random.nextInt(100,400).dp)
-                    .background(Color.Magenta)
-                )
-            }
+        //To Specify the number of page . here we have 2 pages
+        val pagerState = rememberPagerState(pageCount={2})
+        val color=if(pagerState.currentPage==0)Color.Yellow else Color.Green
+        HorizontalPager(
+            state =pagerState
+        ) {
+            Box(modifier = Modifier
+                .padding(12.dp)
+                .fillMaxSize()
+                .background(color)
+            )
         }
-//        LazyVerticalStaggeredGrid(columns=StaggeredGridCells.Adaptive(100.dp)) {
-//            items(50) {
-//                Box(modifier = Modifier
-//                    .padding(12.dp)
-//                    .height(Random.nextInt(100,400).dp)
-//                    .background(Color.Magenta)
-//                )
-//            }
-//        }
-        //For
-//        LazyVerticalGrid(columns= GridCells.Adaptive(100.dp)) {
-//            items(50){
-//                Box(modifier = Modifier
-//                    .padding(12.dp)
-//                    .height(Random.nextInt(100,400).dp)
-//                    .background(Color.Magenta)
-//                )
-//            }
-//        }
+
     }
 }
 
