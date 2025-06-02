@@ -31,7 +31,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.jetpackcomposetutorial.MalakisiTutorial.ThirdActivity
+import com.example.jetpackcomposetutorial.MalakisiTutorial.navigation.Route
+import com.example.jetpackcomposetutorial.MalakisiTutorial.navigation.ScreenA
+import com.example.jetpackcomposetutorial.MalakisiTutorial.navigation.ScreenB
+import com.example.jetpackcomposetutorial.MalakisiTutorial.navigation.ScreenC
+import com.example.jetpackcomposetutorial.MalakisiTutorial.navigation.ScreenD
 import com.example.jetpackcomposetutorial.ui.theme.JetPackComposeTutorialTheme
 import kotlin.random.Random
 
@@ -41,13 +50,51 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
         setContent {
             JetPackComposeTutorialTheme {
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()) { innerPadding ->
-                    MyUI(modifier = Modifier.padding(innerPadding))
+                val navController= rememberNavController()
+                NavHost(
+                    navController=navController,
+                    startDestination =Route.ScreenA
+                ) {
+                    composable<Route.ScreenA> {
+                        ScreenA(onNavigateToScreenB ={
+                            navController.navigate(Route.ScreenB)
+                        })
+                    }
+
+                    composable<Route.ScreenB>{
+                        ScreenB(onNavigateToScreenC ={text,number->
+                            navController.navigate(Route.ScreenC(
+                                myText = text,
+                                myNumber = number
+                            ))
+                        })
+                    }
+
+                    composable<Route.ScreenC> {
+                        val args=it.toRoute<Route.ScreenC>()
+                        ScreenC(
+                            args.myText,
+                            args.myNumber,
+                            onNavigateToScreenD = {nom,prenom->
+                                navController.navigate(Route.ScreenD(
+                                    nom=nom,
+                                    prenom=prenom
+                                ))
+                            }
+                        )
+                    }
+
+                    composable<Route.ScreenD>{
+                        val args=it.toRoute<Route.ScreenD>()
+                        ScreenD(
+                            args.nom,
+                            args.prenom
+                        )
+
+                    }
                 }
             }
         }
@@ -62,32 +109,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 
-@Composable
-fun MyUI(modifier: Modifier) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ){
-        //To Specify the number of page . here we have 2 pages
-        val pagerState = rememberPagerState(pageCount={2})
-        val color=if(pagerState.currentPage==0)Color.Yellow else Color.Green
-        HorizontalPager(
-            state =pagerState
-        ) {
-            Box(modifier = Modifier
-                .padding(12.dp)
-                .fillMaxSize()
-                .background(color)
-            )
-        }
-
-    }
-}
 
 
-@Preview(showBackground = true)
-@Composable
-fun MyUIPreview() {
-    MyUI(modifier = Modifier)
-}
 
 
